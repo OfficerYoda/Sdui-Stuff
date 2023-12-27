@@ -1,12 +1,13 @@
 package de.officeryoda.sdui.Responses.ResponseInformation;
 
 import com.google.gson.annotations.SerializedName;
+import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
-@lombok.Data
-public class Data {
+@Data
+public class UserData {
 
     @SerializedName("uuid")
     private String uuid;

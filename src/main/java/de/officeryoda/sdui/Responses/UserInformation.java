@@ -1,19 +1,14 @@
 package de.officeryoda.sdui.Responses;
 
 import com.google.gson.annotations.SerializedName;
-import de.officeryoda.sdui.Responses.ResponseInformation.Data;
-import de.officeryoda.sdui.Responses.ResponseInformation.Meta;
+import de.officeryoda.sdui.Responses.ResponseInformation.UserData;
+import lombok.EqualsAndHashCode;
 
+@EqualsAndHashCode(callSuper = true)
 @lombok.Data
-public class UserInformation {
+public class UserInformation extends BaseResponseInformation {
 
     @SerializedName("data")
-    private Data data;
-
-    @SerializedName("status")
-    private String status;
-
-    @SerializedName("meta")
-    private Meta meta;
+    private UserData data;
 
 }

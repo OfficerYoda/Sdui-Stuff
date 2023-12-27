@@ -6,6 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.officeryoda.sdui.CustomJsonDeserializer.DateDeserializer;
 import de.officeryoda.sdui.Responses.ParentInformation;
+import de.officeryoda.sdui.Responses.TimeTableInformation;
 import de.officeryoda.sdui.Responses.UserInformation;
 
 import java.io.*;
@@ -106,6 +107,12 @@ public class SduiApiHandler {
         this.apiUrl = this.baseUrl + "users/self/family";
         String response = sendGetRequest();
         return gson.fromJson(response, ParentInformation.class);
+    }
+
+    public TimeTableInformation getTimetable() {
+        this.apiUrl = this.baseUrl + "timetables/users/" + this.settings.get("user_id") + "/timetable";
+        String response = sendGetRequest();
+        return gson.fromJson(response, TimeTableInformation.class);
     }
 
     private String sendGetRequest() {

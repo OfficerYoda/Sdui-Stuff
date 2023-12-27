@@ -23,5 +23,4 @@ public abstract class FamilyPivot {
     @SerializedName("is_accessible")
     private int isAccessible;
 
-
 }
