@@ -1,8 +1,9 @@
 package de.officeryoda.sdui.Responses;
 
 import com.google.gson.annotations.SerializedName;
-import de.officeryoda.sdui.Responses.ResponseInformation.ResponseMeta;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 public class BaseResponseInformation {
@@ -11,6 +12,19 @@ public class BaseResponseInformation {
     private String status;
 
     @SerializedName("meta")
-    private ResponseMeta meta;
+    private Meta meta;
 
+    @Data
+    public static class Meta {
+
+        @SerializedName("warnings")
+        private List<String> warnings;
+
+        @SerializedName("errors")
+        private List<String> errors;
+
+        @SerializedName("success")
+        private List<String> success;
+
+    }
 }
