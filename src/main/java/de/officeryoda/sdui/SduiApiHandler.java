@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import de.officeryoda.sdui.CustomJsonDeserializer.DateDeserializer;
+import de.officeryoda.sdui.Responses.ParentInformation;
+import de.officeryoda.sdui.Responses.UserInformation;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -98,6 +100,12 @@ public class SduiApiHandler {
         }
 
         return gson.fromJson(response, UserInformation.class);
+    }
+
+    public ParentInformation getParentInformation() {
+        this.apiUrl = this.baseUrl + "users/self/family";
+        String response = sendGetRequest();
+        return gson.fromJson(response, ParentInformation.class);
     }
 
     private String sendGetRequest() {

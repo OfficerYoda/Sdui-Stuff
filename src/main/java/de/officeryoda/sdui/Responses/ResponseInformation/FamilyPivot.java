@@ -1,10 +1,12 @@
-package de.officeryoda.sdui.responseSubclasses;
+package de.officeryoda.sdui.Responses.ResponseInformation;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
+import java.util.Date;
+
 @Data
-public class ParentPivot {
+public abstract class FamilyPivot {
 
     @SerializedName("user_id")
     private int userId;
@@ -16,9 +18,10 @@ public class ParentPivot {
     private String relation;
 
     @SerializedName("created_at")
-    private String createdAt;
+    private Date createdAt;
 
     @SerializedName("is_accessible")
     private int isAccessible;
+
 
 }

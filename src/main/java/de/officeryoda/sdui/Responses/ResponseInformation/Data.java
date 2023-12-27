@@ -1,4 +1,4 @@
-package de.officeryoda.sdui.responseSubclasses;
+package de.officeryoda.sdui.Responses.ResponseInformation;
 
 import com.google.gson.annotations.SerializedName;
 
@@ -48,7 +48,7 @@ public class Data {
     // private Can can;
 
     @SerializedName("child_pivot")
-    private List<Object> childPivot; // Replace Object with the actual data type
+    private List<ChildPivot> childPivot;
 
     @SerializedName("parent_pivot")
     private List<ParentPivot> parentPivot;
@@ -96,7 +96,7 @@ public class Data {
     private String state;
 
     @SerializedName("expire_at")
-    private Object expireAt; // Replace Object with the actual data type
+    private Date expireAt;
 
     @SerializedName("locale")
     private String locale;
@@ -141,10 +141,10 @@ public class Data {
         private boolean isPaused;
 
         @SerializedName("archived_at")
-        private String archivedAt;
+        private Date archivedAt;
 
         @SerializedName("deleted_at")
-        private String deletedAt;
+        private Date deletedAt;
 
         @SerializedName("is_trackable_classbook_user")
         private boolean isTrackableClassbookUser;

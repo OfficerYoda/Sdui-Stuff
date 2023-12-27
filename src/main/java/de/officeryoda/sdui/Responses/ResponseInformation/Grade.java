@@ -1,7 +1,9 @@
-package de.officeryoda.sdui.responseSubclasses;
+package de.officeryoda.sdui.Responses.ResponseInformation;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
+
+import java.util.Date;
 
 @Data
 public class Grade {
@@ -37,7 +39,7 @@ public class Grade {
     private int bookableId;
 
     @SerializedName("migrate_at")
-    private Object migrateAt; // Replace Object with the actual data type
+    private Date migrateAt;
 
 
     @Data
