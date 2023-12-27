@@ -1,4 +1,4 @@
-package de.officeryoda.sdui.unnecessaryResponseClasses;
+package de.officeryoda.sdui.responseSubclasses;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;

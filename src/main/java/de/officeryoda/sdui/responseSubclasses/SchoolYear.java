@@ -1,8 +1,9 @@
-package de.officeryoda.sdui.unnecessaryResponseClasses;
+package de.officeryoda.sdui.responseSubclasses;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -18,16 +19,16 @@ public class SchoolYear {
     private String key;
 
     @SerializedName("begins_at")
-    private String beginsAt;
+    private Date beginsAt;
 
     @SerializedName("ends_at")
-    private String endsAt;
+    private Date endsAt;
 
     @SerializedName("created_at")
-    private String createdAt;
+    private Date createdAt;
 
     @SerializedName("updated_at")
-    private String updatedAt;
+    private Date updatedAt;
 
     @SerializedName("pending_upload_group_id")
     private int pendingUploadGroupId;

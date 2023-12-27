@@ -1,7 +1,8 @@
-package de.officeryoda.sdui.unnecessaryResponseClasses;
+package de.officeryoda.sdui.responseSubclasses;
 
 import com.google.gson.annotations.SerializedName;
 
+import java.util.Date;
 import java.util.List;
 
 @lombok.Data
@@ -53,10 +54,10 @@ public class Data {
     private List<ParentPivot> parentPivot;
 
     @SerializedName("password_changed_at")
-    private String passwordChangedAt;
+    private Date passwordChangedAt;
 
     @SerializedName("loggedin_at")
-    private String loggedinAt;
+    private Date loggedinAt;
 
     // @SerializedName("properties") // Uncomment if you have a field named "properties"
     // private Properties properties;

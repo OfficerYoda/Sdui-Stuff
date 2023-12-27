@@ -1,8 +1,9 @@
-package de.officeryoda.sdui.unnecessaryResponseClasses;
+package de.officeryoda.sdui.responseSubclasses;
 
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -15,13 +16,13 @@ public class Timetable {
     private int id;
 
     @SerializedName("process_started_at")
-    private int processStartedAt;
+    private Date processStartedAt;
 
     @SerializedName("processed_at")
-    private int processedAt;
+    private Date processedAt;
 
     @SerializedName("last_updated_at")
-    private int lastUpdatedAt;
+    private Date lastUpdatedAt;
 
     @SerializedName("active_schoolyear_id")
     private int activeSchoolyearId;
