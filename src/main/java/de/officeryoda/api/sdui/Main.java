@@ -1,6 +1,6 @@
 package de.officeryoda.api.sdui;
 
-import de.officeryoda.api.sdui.Responses.*;
+import de.officeryoda.api.sdui.response.*;
 
 import java.io.BufferedWriter;
 import java.io.FileWriter;

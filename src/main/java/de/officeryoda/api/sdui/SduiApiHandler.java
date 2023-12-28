@@ -4,13 +4,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import de.officeryoda.api.sdui.CustomJsonDeserializer.DateDeserializer;
-import de.officeryoda.api.sdui.CustomJsonDeserializer.PreviewDeserializer;
-import de.officeryoda.api.sdui.Responses.NewsInformation;
-import de.officeryoda.api.sdui.Responses.ParentInformation;
-import de.officeryoda.api.sdui.Responses.ResponseInformation.Preview;
-import de.officeryoda.api.sdui.Responses.UserInformation;
-import de.officeryoda.api.sdui.Responses.TimeTableInformation;
+import de.officeryoda.api.sdui.deserializer.DateDeserializer;
+import de.officeryoda.api.sdui.deserializer.PreviewDeserializer;
+import de.officeryoda.api.sdui.response.NewsInformation;
+import de.officeryoda.api.sdui.response.ParentInformation;
+import de.officeryoda.api.sdui.response.data.news.Preview;
+import de.officeryoda.api.sdui.response.UserInformation;
+import de.officeryoda.api.sdui.response.TimeTableInformation;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -104,6 +104,7 @@ public class SduiApiHandler {
             }
         }
 
+        System.out.println("response = " + response);
         return gson.fromJson(response, UserInformation.class);
     }
 
