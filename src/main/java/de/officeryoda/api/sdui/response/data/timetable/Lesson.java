@@ -1,8 +1,10 @@
 package de.officeryoda.api.sdui.response.data.timetable;
 
 import com.google.gson.annotations.SerializedName;
+import de.officeryoda.api.sdui.SduiApiUtil;
 import lombok.Data;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -27,6 +29,25 @@ public class Lesson {
     private String comment;
     private Course course;
     private Meta meta;
+
+    /**
+     * This method will return {@link Lesson#beginsAt} as {@link LocalDateTime}.
+     *
+     * @return The {@link LocalDateTime} of the moment the lesson starts.
+     */
+    public LocalDateTime getStartTime() {
+        return SduiApiUtil.secondsToLocalDateTime(this.beginsAt);
+    }
+
+
+    /**
+     * This method will return {@link Lesson#endsAt} as {@link LocalDateTime}.
+     *
+     * @return The {@link LocalDateTime} of the moment the lesson ends.
+     */
+    public LocalDateTime getEndTime() {
+        return SduiApiUtil.secondsToLocalDateTime(this.endsAt);
+    }
 
     @Data
     public static class Meta {

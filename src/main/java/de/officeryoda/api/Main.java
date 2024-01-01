@@ -1,6 +1,7 @@
 package de.officeryoda.api;
 
 import de.officeryoda.api.sdui.SduiApiHandler;
+import de.officeryoda.api.sdui.SduiApiUtil;
 import de.officeryoda.api.sdui.response.NewsInformation;
 import de.officeryoda.api.sdui.response.ParentInformation;
 import de.officeryoda.api.sdui.response.TimeTableInformation;
@@ -23,7 +24,7 @@ public class Main {
 
         UserInformation userInfo = sduiApiHandler.getUserInformation();
 //        ParentInformation parentInfo = sduiApiHandler.getParentInformation();
-//        TimeTableInformation timetable = sduiApiHandler.getTimetable();
+        TimeTableInformation timetable = sduiApiHandler.getTimetable();
 //        NewsInformation news = sduiApiHandler.getNews();
 
 
@@ -32,17 +33,17 @@ public class Main {
 //        System.out.println("timetable = " + timetable.hashCode() + " (hash because .toString() is to long)");
 //        System.out.println("news = " + news.hashCode() + " (hash because .toString() is possibly multiline)");
 
-//        List<Lesson> lessons = timetable.getData().getLessons();
-//        for(Lesson lesson : lessons) {
-//            Course course = lesson.getCourse();
-//            if(course == null) continue;
-//            System.out.println("Name:\t" + course.getMeta().getDisplayName()
-//                    + "\nDesc:\t" + course.getDescription()
-//                    + "\nSubject:\t" + course.getSubject()
-//                    + "\nTime:\t " + getTimeAsString(convertSecondsToLocalDateTime(lesson.getBeginsAt()))+ "-" + getTimeAsString(convertSecondsToLocalDateTime(lesson.getEndsAt())));
-//
-//            System.out.println("===================");
-//        }
+        List<Lesson> lessons = timetable.getData().getLessons();
+        for(Lesson lesson : lessons) {
+            Course course = lesson.getCourse();
+            if(course == null) continue;
+            System.out.println("Name:\t" + course.getMeta().getDisplayName()
+                    + "\nDesc:\t" + course.getDescription()
+                    + "\nSubject:\t" + course.getSubject()
+                    + "\nTime:\t " + SduiApiUtil.formatLocalDateTimeToString(lesson.getStartTime())+ "-" + SduiApiUtil.formatLocalDateTimeToString(lesson.getEndTime()));
+
+            System.out.println("===================");
+        }
     }
 
     public static void writeToFile(String input, String id) {
@@ -54,19 +55,4 @@ public class Main {
         }
     }
 
-    public static LocalDateTime convertSecondsToLocalDateTime(long seconds) {
-        // Convert seconds to milliseconds
-        Instant instant = Instant.ofEpochSecond(seconds);
-
-        // Convert Instant to LocalDateTime
-        return LocalDateTime.ofInstant(instant, java.time.ZoneId.systemDefault());
-    }
-
-    public static String getTimeAsString(LocalDateTime dateTime) {
-        // Define a DateTimeFormatter to format the time
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
-
-        // Format the time as a string
-        return dateTime.format(formatter);
-    }
 }
