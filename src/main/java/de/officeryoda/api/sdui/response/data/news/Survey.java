@@ -3,7 +3,7 @@ package de.officeryoda.api.sdui.response.data.news;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,15 +24,15 @@ public class Survey {
     @SerializedName("has_translations")
     private boolean hasTranslations;
     @SerializedName("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     @SerializedName("expires_at")
-    private Date expiresAt;
+    private LocalDateTime expiresAt;
     @SerializedName("ended_at")
-    private Date endedAt;
+    private LocalDateTime endedAt;
     @SerializedName("deleted_at")
-    private Date deletedAt;
+    private LocalDateTime deletedAt;
     private User user;
 
     @Data

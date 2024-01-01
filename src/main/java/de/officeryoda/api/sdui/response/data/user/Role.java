@@ -3,14 +3,14 @@ package de.officeryoda.api.sdui.response.data.user;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class Role {
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     @SerializedName("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private int id;
     private String name;
     private String key;

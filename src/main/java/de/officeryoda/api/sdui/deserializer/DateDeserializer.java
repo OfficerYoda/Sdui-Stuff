@@ -6,13 +6,11 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonParseException;
 
 import java.lang.reflect.Type;
-import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
-import java.util.Date;
 
-public class DateDeserializer implements JsonDeserializer<Date> {
+public class DateDeserializer implements JsonDeserializer<LocalDateTime> {
     private static final DateTimeFormatter DATE_FORMATTER;
 
     static {
@@ -23,12 +21,10 @@ public class DateDeserializer implements JsonDeserializer<Date> {
     }
 
     @Override
-    public Date deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
+    public LocalDateTime deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) throws JsonParseException {
         String dateString = json.getAsString();
         try {
-            LocalDateTime localDateTime = LocalDateTime.parse(dateString, DATE_FORMATTER);
-            Instant instant = localDateTime.atZone(java.time.ZoneId.systemDefault()).toInstant();
-            return Date.from(instant);
+            return LocalDateTime.parse(dateString, DATE_FORMATTER);
         } catch (Exception e) {
             throw new JsonParseException("Unable to parse date: " + dateString);
         }

@@ -3,7 +3,7 @@ package de.officeryoda.api.sdui.response.data.user;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class Grade {
@@ -22,7 +22,7 @@ public class Grade {
     @SerializedName("bookable_id")
     private int bookableId;
     @SerializedName("migrate_at")
-    private Date migrateAt;
+    private LocalDateTime migrateAt;
 
     @Data
     public static class Meta {

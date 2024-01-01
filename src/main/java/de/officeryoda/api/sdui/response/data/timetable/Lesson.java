@@ -15,12 +15,12 @@ public class Lesson {
     private List<Lesson> referencedTargetLessons;
     private int id;
     /**
-     * Represents the start time in seconds since the Unix Epoch (January 1, 1970, 00:00:00 UTC).
+     * Represents the start time in <b>seconds</b> since the Unix Epoch (January 1, 1970, 00:00:00 UTC).
      */
     @SerializedName("begins_at")
     private int beginsAt;
     /**
-     * Represents the end time in seconds since the Unix Epoch (January 1, 1970, 00:00:00 UTC).
+     * Represents the end time in <b>seconds</b> since the Unix Epoch (January 1, 1970, 00:00:00 UTC).
      */
     @SerializedName("ends_at")
     private int endsAt;

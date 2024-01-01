@@ -3,7 +3,7 @@ package de.officeryoda.api.sdui.response.data;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -13,13 +13,13 @@ public class SchoolYear {
     private int timetableId;
     private String key;
     @SerializedName("begins_at")
-    private Date beginsAt;
+    private LocalDateTime beginsAt;
     @SerializedName("ends_at")
-    private Date endsAt;
+    private LocalDateTime endsAt;
     @SerializedName("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     @SerializedName("pending_upload_group_id")
     private int pendingUploadGroupId;
     private Meta meta;

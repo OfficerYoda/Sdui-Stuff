@@ -3,7 +3,7 @@ package de.officeryoda.api.sdui.response.data.news;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -24,7 +24,7 @@ public class NewsItem {
     @SerializedName("is_pinned")
     private boolean isPinned;
     @SerializedName("publish_at")
-    private Date publishAt;
+    private LocalDateTime publishAt;
     @SerializedName("has_emergency_sms")
     private boolean hasEmergencySms;
     @SerializedName("content_rendered")
@@ -36,9 +36,9 @@ public class NewsItem {
     private List<ChannelPivot> channelPivot;
     private Survey survey;
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     @SerializedName("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     private List<Attachment> attachments;
     private Preview preview;
     private Meta meta;

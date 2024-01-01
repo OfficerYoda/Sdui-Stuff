@@ -5,7 +5,7 @@ import de.officeryoda.api.sdui.response.data.School;
 import de.officeryoda.api.sdui.response.data.timetable.Bookable;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
@@ -28,13 +28,13 @@ public class UserData {
     private School school;
     private Bookable bookable;
     @SerializedName("child_pivot")
-    private List<ChildPivot> childPivot;
+    private List<FamilyPivot> childPivots;
     @SerializedName("parent_pivot")
-    private List<ParentPivot> parentPivot;
+    private List<FamilyPivot> parentPivots;
     @SerializedName("password_changed_at")
-    private Date passwordChangedAt;
+    private LocalDateTime passwordChangedAt;
     @SerializedName("loggedin_at")
-    private Date loggedInAt;
+    private LocalDateTime loggedInAt;
     private Grade grade;
     @SerializedName("grade_id")
     private int gradeId;
@@ -50,7 +50,7 @@ public class UserData {
     private String sex;
     private String state;
     @SerializedName("expire_at")
-    private Date expireAt;
+    private LocalDateTime expireAt;
     private String locale;
     @SerializedName("shortcut")
     private String shortcut;
@@ -75,9 +75,9 @@ public class UserData {
         @SerializedName("is_paused")
         private boolean isPaused;
         @SerializedName("archived_at")
-        private Date archivedAt;
+        private LocalDateTime archivedAt;
         @SerializedName("deleted_at")
-        private Date deletedAt;
+        private LocalDateTime deletedAt;
         @SerializedName("is_trackable_classbook_user")
         private boolean isTrackableClassbookUser;
         @SerializedName("is_trackable")

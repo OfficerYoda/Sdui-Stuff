@@ -3,7 +3,7 @@ package de.officeryoda.api.sdui.response.data.news;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class Attachment {
@@ -20,9 +20,9 @@ public class Attachment {
     private String extension;
     private int size;
     @SerializedName("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     @SerializedName("file_type")
     private String fileType;
     private Meta meta;

@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import de.officeryoda.api.sdui.response.data.School;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class Channel {
@@ -43,24 +43,24 @@ public class Channel {
     @SerializedName("is_hidden_memberlist")
     private boolean isHiddenMemberlist;
     @SerializedName("twoway_expires_at")
-    private Date twowayExpiresAt;
+    private LocalDateTime twoWayExpiresAt;
     @SerializedName("activity_at")
-    private Date activityAt;
+    private LocalDateTime activityAt;
     @SerializedName("expires_at")
-    private Date expiresAt;
+    private LocalDateTime expiresAt;
     @SerializedName("expiration_reason")
     private Object expirationReason;
     @SerializedName("trashed_at")
-    private Date trashedAt;
+    private LocalDateTime trashedAt;
     @SerializedName("created_at")
-    private Date createdAt;
+    private LocalDateTime createdAt;
     @SerializedName("updated_at")
-    private Date updatedAt;
+    private LocalDateTime updatedAt;
     private String group;
     @SerializedName("disabled_by_id")
     private Object disabledById;
     @SerializedName("content_move_decision_made_at")
-    private Date contentMoveDecisionMadeAt;
+    private LocalDateTime contentMoveDecisionMadeAt;
     private ChannelPivot pivot;
     private School school;
     private Meta meta;

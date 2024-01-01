@@ -16,7 +16,7 @@ import java.io.*;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -30,7 +30,7 @@ public class SduiApiHandler {
 
     public SduiApiHandler() {
         this.gson = new GsonBuilder()
-                .registerTypeAdapter(Date.class, new DateDeserializer())
+                .registerTypeAdapter(LocalDateTime.class, new DateDeserializer())
                 .registerTypeAdapter(Preview.class, new PreviewDeserializer())
                 .create();
         this.settings = loadSettings();
@@ -103,8 +103,6 @@ public class SduiApiHandler {
                 System.out.println("Unable to retrieve user ID from the response.");
             }
         }
-
-        System.out.println("response = " + response);
         return gson.fromJson(response, UserInformation.class);
     }
 
@@ -122,8 +120,8 @@ public class SduiApiHandler {
 
     /**
      *
-     * @param page the page of news to get; page <= 1 will return the same News
-     * @return
+     * @param page the page of news to get; every page contains 10 NewsItems; page <= 1 will return the same News
+     * @return The posted news
      */
     public NewsInformation getNews(int page) {
         this.apiUrl = this.baseUrl + "users/" + this.settings.get("user_id") + "/feed/news?page=" + page;

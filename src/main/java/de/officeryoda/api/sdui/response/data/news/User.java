@@ -3,7 +3,7 @@ package de.officeryoda.api.sdui.response.data.news;
 import com.google.gson.annotations.SerializedName;
 import lombok.Data;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Data
 public class User {
@@ -14,7 +14,7 @@ public class User {
     private String title;
     private String state;
     @SerializedName("expire_at")
-    private Date expireAt;
+    private LocalDateTime expireAt;
     private String locale;
     private Shortcut shortcut;
     @SerializedName("shortcut_id")
@@ -56,6 +56,6 @@ public class User {
         @SerializedName("is_paused")
         private boolean isPaused;
         @SerializedName("deleted_at")
-        private Date deletedAt;
+        private LocalDateTime deletedAt;
     }
 }
