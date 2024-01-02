@@ -18,20 +18,22 @@ import com.google.api.services.calendar.model.EventDateTime;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
+import java.time.*;
+import java.time.temporal.ChronoUnit;
 import java.util.Collections;
 
 public class GoogleCalendarHandler {
 
-    private static final String APPLICATION_NAME;
-    private static final JsonFactory JSON_FACTORY;
-    private static final String TOKENS_DIRECTORY_PATH;
-    private static final String CLIENT_ID;
-    private static final String CLIENT_SECRET;
-    private static final String REDIRECT_URIS;
+    private final String APPLICATION_NAME;
+    private final JsonFactory JSON_FACTORY;
+    private final String TOKENS_DIRECTORY_PATH;
+    private final String CLIENT_ID;
+    private final String CLIENT_SECRET;
+    private final String REDIRECT_URIS;
 
     private static Calendar service;
 
-    static {
+    {
         APPLICATION_NAME = "YOUR_PROJECT_ID"; // Set to your project ID or any suitable name
         JSON_FACTORY = JacksonFactory.getDefaultInstance();
         TOKENS_DIRECTORY_PATH = "tokens";
@@ -53,31 +55,23 @@ public class GoogleCalendarHandler {
         }
     }
 
-    public static void main(String[] args) throws GeneralSecurityException, IOException {
+    public GoogleCalendarHandler() {
         // Initialize the Calendar service
-        service = getCalendarService();
-
-        // Create an event
-        Event event = createEvent();
-
-        // Print the event link
-        System.out.printf("Event created: %s\n", event.getHtmlLink());
+        try {
+            service = getCalendarService();
+        } catch(IOException | GeneralSecurityException e) {
+            throw new RuntimeException(e);
+        }
     }
 
-    private static Event createEvent() {
-        // Create an event
-        Event event = new Event()
-                .setSummary("Midnight snack")
-                .setLocation("Living room")
-                .setDescription("I am eating.");
-
-        DateTime startDateTime = new DateTime("2024-01-01T02:00:00.000Z");
+    public Event createEventInCalendar(Event event, LocalDateTime startTime, LocalDateTime endTime) {
+        DateTime startDateTime = new DateTime(startTime.atZone(ZoneId.of("Europe/Berlin")).toInstant().toEpochMilli());
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
                 .setTimeZone("CET");
         event.setStart(start);
 
-        DateTime endDateTime = new DateTime("2024-01-01T02:30:00.000Z");
+        DateTime endDateTime = new DateTime(endTime.atZone(ZoneId.of("Europe/Berlin")).toInstant().toEpochMilli());
         EventDateTime end = new EventDateTime()
                 .setDateTime(endDateTime)
                 .setTimeZone("CET");
@@ -93,7 +87,7 @@ public class GoogleCalendarHandler {
         }
     }
 
-    private static Calendar getCalendarService() throws IOException, GeneralSecurityException {
+    private Calendar getCalendarService() throws IOException, GeneralSecurityException {
         final NetHttpTransport HTTP_TRANSPORT = GoogleNetHttpTransport.newTrustedTransport();
 
         // Load client secrets

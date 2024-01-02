@@ -1,5 +1,7 @@
 package de.officeryoda.api;
 
+import com.google.api.services.calendar.model.Event;
+import de.officeryoda.api.google.calendar.GoogleCalendarHandler;
 import de.officeryoda.api.sdui.SduiApiHandler;
 import de.officeryoda.api.sdui.SduiApiUtil;
 import de.officeryoda.api.sdui.response.NewsInformation;
@@ -12,13 +14,33 @@ import de.officeryoda.api.sdui.response.data.timetable.Lesson;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
-        sduiApiTest();
+//        sduiApiTest();
+        googleCalendarApiTest();
+    }
 
+    private static void googleCalendarApiTest() {
+        GoogleCalendarHandler calendarHandler = new GoogleCalendarHandler();
+
+        // Create an event
+        Event event = new Event()
+                .setSummary("Midnight snack")
+                .setLocation("Living room")
+                .setDescription("I am eating.");
+
+        LocalDateTime startTime = LocalDateTime.of(2024, 1, 1, 2, 20);
+        LocalDateTime endTime = startTime.plusMinutes(35);
+
+        event = calendarHandler.createEventInCalendar(event, startTime, endTime);
+
+        // Print the event link
+        System.out.printf("Event created: %s\n", event.getHtmlLink());
     }
 
     private static void sduiApiTest() {
