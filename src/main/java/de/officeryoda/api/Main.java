@@ -12,14 +12,16 @@ import de.officeryoda.api.sdui.response.data.timetable.Lesson;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) {
+        sduiApiTest();
+
+    }
+
+    private static void sduiApiTest() {
         SduiApiHandler sduiApiHandler = new SduiApiHandler();
 
         UserInformation userInfo = sduiApiHandler.getUserInformation();
@@ -54,5 +56,4 @@ public class Main {
             System.err.println("An error occurred while writing to the file: (" + id + ")" + e.getMessage());
         }
     }
-
 }
