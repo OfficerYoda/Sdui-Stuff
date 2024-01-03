@@ -4,8 +4,6 @@ import com.google.api.services.calendar.model.Event;
 import de.officeryoda.api.google.calendar.GoogleCalendarHandler;
 import de.officeryoda.api.sdui.SduiApiHandler;
 import de.officeryoda.api.sdui.SduiApiUtil;
-import de.officeryoda.api.sdui.response.NewsInformation;
-import de.officeryoda.api.sdui.response.ParentInformation;
 import de.officeryoda.api.sdui.response.TimeTableInformation;
 import de.officeryoda.api.sdui.response.UserInformation;
 import de.officeryoda.api.sdui.response.data.timetable.Course;
@@ -15,7 +13,6 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 
 public class Main {
@@ -46,9 +43,9 @@ public class Main {
     private static void sduiApiTest() {
         SduiApiHandler sduiApiHandler = new SduiApiHandler();
 
-        UserInformation userInfo = sduiApiHandler.getUserInformation();
+        UserInformation userInfo = sduiApiHandler.fetchUserInformation();
 //        ParentInformation parentInfo = sduiApiHandler.getParentInformation();
-        TimeTableInformation timetable = sduiApiHandler.getTimetable();
+        TimeTableInformation timetable = sduiApiHandler.fetchTimetable();
 //        NewsInformation news = sduiApiHandler.getNews();
 
 

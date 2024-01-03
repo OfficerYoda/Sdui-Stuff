@@ -8,9 +8,9 @@ import de.officeryoda.api.sdui.deserializer.DateDeserializer;
 import de.officeryoda.api.sdui.deserializer.PreviewDeserializer;
 import de.officeryoda.api.sdui.response.NewsInformation;
 import de.officeryoda.api.sdui.response.ParentInformation;
-import de.officeryoda.api.sdui.response.data.news.Preview;
-import de.officeryoda.api.sdui.response.UserInformation;
 import de.officeryoda.api.sdui.response.TimeTableInformation;
+import de.officeryoda.api.sdui.response.UserInformation;
+import de.officeryoda.api.sdui.response.data.news.Preview;
 
 import java.io.*;
 import java.net.HttpURLConnection;
@@ -21,6 +21,9 @@ import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Handles communication with the SDUI API for various functionalities.
+ */
 public class SduiApiHandler {
 
     private final Gson gson;
@@ -29,6 +32,10 @@ public class SduiApiHandler {
     private final Map<String, String> headers;
     private String apiUrl;
 
+    /**
+     * Constructs an instance of SduiApiHandler, initializing Gson, settings, base URL, and headers.
+     * Checks and performs login and user information retrieval if necessary.
+     */
     public SduiApiHandler() {
         this.gson = new GsonBuilder()
                 .registerTypeAdapter(LocalDateTime.class, new DateDeserializer())
@@ -45,11 +52,17 @@ public class SduiApiHandler {
         }
         if(this.settings.get("user_id") == null) {
             System.out.println("get user information");
-            getUserInformation();
+            fetchUserInformation();
         }
     }
 
+    /**
+     * Loads settings from a JSON file.
+     *
+     * @return A map containing loaded settings.
+     */
     private Map<String, String> loadSettings() {
+        // Load settings from a JSON file
         Map<String, String> loadedSettings;
         try(BufferedReader reader = new BufferedReader(new FileReader("tokens/settings.json"))) {
             StringBuilder content = new StringBuilder();
@@ -64,6 +77,9 @@ public class SduiApiHandler {
         return loadedSettings;
     }
 
+    /**
+     * Saves settings to a JSON file.
+     */
     private void saveSettings() {
         try(BufferedWriter writer = new BufferedWriter(new FileWriter("tokens/settings.json"))) {
             writer.write(convertToJson(this.settings));
@@ -72,6 +88,9 @@ public class SduiApiHandler {
         }
     }
 
+    /**
+     * Sends a POST request to the login API endpoint and updates access token in settings.
+     */
     private void login() {
         this.apiUrl = this.baseUrl + "auth/login";
         this.headers.put("content-type", "application/json");
@@ -91,7 +110,12 @@ public class SduiApiHandler {
         }
     }
 
-    public UserInformation getUserInformation() {
+    /**
+     * Retrieves user information and updates user ID in settings.
+     *
+     * @return UserInformation object containing user information.
+     */
+    public UserInformation fetchUserInformation() {
         this.apiUrl = this.baseUrl + "users/self";
         String response = sendGetRequest();
         if(this.settings.get("user_id") == null) {
@@ -107,7 +131,12 @@ public class SduiApiHandler {
         return gson.fromJson(response, UserInformation.class);
     }
 
-    public ParentInformation getParentInformation() {
+    /**
+     * Retrieves information about the parent associated with the current user.
+     *
+     * @return ParentInformation object containing information about the parent.
+     */
+    public ParentInformation fetchParentInformation() {
         this.apiUrl = this.baseUrl + "users/self/family";
         String response = sendGetRequest();
         return gson.fromJson(response, ParentInformation.class);
@@ -118,12 +147,9 @@ public class SduiApiHandler {
      *
      * @return TimeTableInformation object containing timetable information.
      */
-    public TimeTableInformation getTimetable() {
-        // Construct the API URL for retrieving the timetable
+    public TimeTableInformation fetchTimetable() {
         this.apiUrl = this.baseUrl + "timetables/users/" + this.settings.get("user_id") + "/timetable";
-
-        // fetch and return the timetable
-        return fetchTimetable();
+        return retrieveTimetable();
     }
 
     /**
@@ -133,51 +159,60 @@ public class SduiApiHandler {
      * @param endDate   The end date of the timetable.
      * @return TimeTableInformation object containing timetable information for the specified date range.
      */
-    public TimeTableInformation getTimetable(LocalDateTime startDate, LocalDateTime endDate) {
+    public TimeTableInformation fetchTimetable(LocalDateTime startDate, LocalDateTime endDate) {
         // Format the start and end dates to the required pattern
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String queryString = "?begins_at=" + startDate.format(formatter) + "&ends_at=" + endDate.format(formatter);
 
-        // Construct the API URL for retrieving the timetable with date range
         this.apiUrl = this.baseUrl + "timetables/users/" + this.settings.get("user_id") + "/timetable" + queryString;
-
-        // fetch and return the timetable
-        return fetchTimetable();
+        return retrieveTimetable();
     }
 
-    private TimeTableInformation fetchTimetable() {
-        // Send GET request to the API
+    private TimeTableInformation retrieveTimetable() {
         String response = sendGetRequest();
-
-        // Parse the JSON response and return the TimeTableInformation object
         return gson.fromJson(response, TimeTableInformation.class);
     }
 
     /**
+     * Sends a GET request to the news API endpoint and retrieves news information.
      *
-     * @param page the page of news to get; every page contains 10 NewsItems; page <= 1 will return the same News
-     * @return The posted news
+     * @param page The page number of news to get; each page contains 10 NewsItems; page <= 1 will return the same News.
+     * @return NewsInformation object containing news information.
      */
-    public NewsInformation getNews(int page) {
+    public NewsInformation fetchNews(int page) {
         this.apiUrl = this.baseUrl + "users/" + this.settings.get("user_id") + "/feed/news?page=" + page;
-
         String response = sendGetRequest();
-        return  gson.fromJson(response, NewsInformation.class);
+        return gson.fromJson(response, NewsInformation.class);
     }
 
-    public NewsInformation getNews() {
-        return getNews(0);
+    /**
+     * Overloaded method to get news with the default page number (0).
+     *
+     * @return NewsInformation object containing news information.
+     */
+    public NewsInformation fetchNews() {
+        return fetchNews(0);
     }
 
-    /// networking stuff
+    // Networking stuff
 
+    /**
+     * Sends a GET request to the API and returns the response.
+     *
+     * @return The response from the GET request.
+     */
     private String sendGetRequest() {
         HttpURLConnection connection = getHttpURLConnection("GET");
         setRequestHeaders(connection);
-
         return handleResponse(connection);
     }
 
+    /**
+     * Sends a POST request to the API with the provided payload and returns the response.
+     *
+     * @param payload The payload for the POST request.
+     * @return The response from the POST request.
+     */
     private String sendPostRequest(String payload) {
         HttpURLConnection connection = getHttpURLConnection("POST");
         connection.setRequestProperty("Content-Type", "application/json");
@@ -189,6 +224,13 @@ public class SduiApiHandler {
         return handleResponse(connection);
     }
 
+    // ... (Other methods)
+
+    /**
+     * Sets request headers for the HTTP connection.
+     *
+     * @param connection The HTTP connection to set headers for.
+     */
     private void setRequestHeaders(HttpURLConnection connection) {
         // Set headers
         for(Map.Entry<String, String> entry : this.headers.entrySet()) {
@@ -196,6 +238,12 @@ public class SduiApiHandler {
         }
     }
 
+    /**
+     * Creates an HTTP connection with the specified method.
+     *
+     * @param method The HTTP method (GET, POST, etc.).
+     * @return The HttpURLConnection object.
+     */
     private HttpURLConnection getHttpURLConnection(String method) {
         HttpURLConnection connection;
 
@@ -210,6 +258,12 @@ public class SduiApiHandler {
         return connection;
     }
 
+    /**
+     * Sends the payload to the specified HTTP connection.
+     *
+     * @param connection The HTTP connection to send the payload to.
+     * @param payload    The payload to be sent.
+     */
     private void sendPayload(HttpURLConnection connection, String payload) {
         // Send payload
         try(OutputStream os = connection.getOutputStream()) {
@@ -220,6 +274,12 @@ public class SduiApiHandler {
         }
     }
 
+    /**
+     * Handles the response from the HTTP connection.
+     *
+     * @param connection The HTTP connection to handle the response for.
+     * @return The response string.
+     */
     private static String handleResponse(HttpURLConnection connection) {
         // Handle response
         try {
@@ -241,10 +301,22 @@ public class SduiApiHandler {
         }
     }
 
+    /**
+     * Converts a map to a JSON string.
+     *
+     * @param data The map to convert.
+     * @return The JSON representation of the map.
+     */
     private String convertToJson(Map<String, String> data) {
         return gson.toJson(data);
     }
 
+    /**
+     * Parses a JSON string into a map.
+     *
+     * @param json The JSON string to parse.
+     * @return The parsed map.
+     */
     private Map<String, String> parseJson(String json) {
         Map<String, String> result = new HashMap<>();
 
