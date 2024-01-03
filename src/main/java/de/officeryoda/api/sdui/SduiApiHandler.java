@@ -50,7 +50,7 @@ public class SduiApiHandler {
 
     private Map<String, String> loadSettings() {
         Map<String, String> loadedSettings;
-        try(BufferedReader reader = new BufferedReader(new FileReader("settings.json"))) {
+        try(BufferedReader reader = new BufferedReader(new FileReader("tokens/settings.json"))) {
             StringBuilder content = new StringBuilder();
             String line;
             while((line = reader.readLine()) != null) {
@@ -64,7 +64,7 @@ public class SduiApiHandler {
     }
 
     private void saveSettings() {
-        try(BufferedWriter writer = new BufferedWriter(new FileWriter("settings.json"))) {
+        try(BufferedWriter writer = new BufferedWriter(new FileWriter("tokens/settings.json"))) {
             writer.write(convertToJson(this.settings));
         } catch(IOException e) {
             throw new RuntimeException(e);
