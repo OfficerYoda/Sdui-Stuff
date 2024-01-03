@@ -17,6 +17,7 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -112,9 +113,43 @@ public class SduiApiHandler {
         return gson.fromJson(response, ParentInformation.class);
     }
 
+    /**
+     * Gets the timetable without specifying start and end dates.
+     *
+     * @return TimeTableInformation object containing timetable information.
+     */
     public TimeTableInformation getTimetable() {
+        // Construct the API URL for retrieving the timetable
         this.apiUrl = this.baseUrl + "timetables/users/" + this.settings.get("user_id") + "/timetable";
+
+        // fetch and return the timetable
+        return fetchTimetable();
+    }
+
+    /**
+     * Gets the timetable for a specific date range.
+     *
+     * @param startDate The start date of the timetable.
+     * @param endDate   The end date of the timetable.
+     * @return TimeTableInformation object containing timetable information for the specified date range.
+     */
+    public TimeTableInformation getTimetable(LocalDateTime startDate, LocalDateTime endDate) {
+        // Format the start and end dates to the required pattern
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        String queryString = "?begins_at=" + startDate.format(formatter) + "&ends_at=" + endDate.format(formatter);
+
+        // Construct the API URL for retrieving the timetable with date range
+        this.apiUrl = this.baseUrl + "timetables/users/" + this.settings.get("user_id") + "/timetable" + queryString;
+
+        // fetch and return the timetable
+        return fetchTimetable();
+    }
+
+    private TimeTableInformation fetchTimetable() {
+        // Send GET request to the API
         String response = sendGetRequest();
+
+        // Parse the JSON response and return the TimeTableInformation object
         return gson.fromJson(response, TimeTableInformation.class);
     }
 
@@ -133,6 +168,8 @@ public class SduiApiHandler {
     public NewsInformation getNews() {
         return getNews(0);
     }
+
+    /// networking stuff
 
     private String sendGetRequest() {
         HttpURLConnection connection = getHttpURLConnection("GET");
