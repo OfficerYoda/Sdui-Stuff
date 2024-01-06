@@ -39,7 +39,6 @@ public class Lesson {
         return SduiApiUtil.secondsToLocalDateTime(this.beginsAt);
     }
 
-
     /**
      * This method will return {@link Lesson#endsAt} as {@link LocalDateTime}.
      *

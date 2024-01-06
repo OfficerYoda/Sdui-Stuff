@@ -15,6 +15,7 @@ import com.google.api.services.calendar.Calendar;
 import com.google.api.services.calendar.CalendarScopes;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.*;
 import java.security.GeneralSecurityException;
@@ -65,6 +66,11 @@ public class GoogleCalendarHandler {
     }
 
     public Event createEventInCalendar(Event event, LocalDateTime startTime, LocalDateTime endTime) {
+        Event.Reminders reminders = new Event.Reminders().setUseDefault(false);
+        return createEventInCalendar(event, startTime, endTime, reminders);
+    }
+
+    public Event createEventInCalendar(@NotNull Event event, @NotNull LocalDateTime startTime, @NotNull LocalDateTime endTime, Event.Reminders reminders) {
         DateTime startDateTime = new DateTime(startTime.atZone(ZoneId.of("Europe/Berlin")).toInstant().toEpochMilli());
         EventDateTime start = new EventDateTime()
                 .setDateTime(startDateTime)
@@ -76,6 +82,9 @@ public class GoogleCalendarHandler {
                 .setDateTime(endDateTime)
                 .setTimeZone("CET");
         event.setEnd(end);
+
+        // Set reminders
+        event.setReminders(reminders);
 
         // Insert the event into the calendar
         try {
