@@ -57,6 +57,33 @@ public class SduiApiHandler {
     }
 
     /**
+     * Handles the response from the HTTP connection.
+     *
+     * @param connection The HTTP connection to handle the response for.
+     * @return The response string.
+     */
+    private static String handleResponse(HttpURLConnection connection) {
+        // Handle response
+        try {
+            int responseCode = connection.getResponseCode();
+
+            if(responseCode == 200) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+                while((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+                return response.toString();
+            } else {
+                return String.valueOf(responseCode);
+            }
+        } catch(IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    /**
      * Loads settings from a JSON file.
      *
      * @return A map containing loaded settings.
@@ -196,6 +223,11 @@ public class SduiApiHandler {
 
     // Networking stuff
 
+    public String sendNews(String news) {
+        this.apiUrl = this.baseUrl + "/channels/news";
+        return sendPostRequest(news);
+    }
+
     /**
      * Sends a GET request to the API and returns the response.
      *
@@ -206,6 +238,8 @@ public class SduiApiHandler {
         setRequestHeaders(connection);
         return handleResponse(connection);
     }
+
+    // ... (Other methods)
 
     /**
      * Sends a POST request to the API with the provided payload and returns the response.
@@ -223,8 +257,6 @@ public class SduiApiHandler {
 
         return handleResponse(connection);
     }
-
-    // ... (Other methods)
 
     /**
      * Sets request headers for the HTTP connection.
@@ -269,33 +301,6 @@ public class SduiApiHandler {
         try(OutputStream os = connection.getOutputStream()) {
             byte[] input = payload.getBytes(StandardCharsets.UTF_8);
             os.write(input, 0, input.length);
-        } catch(IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    /**
-     * Handles the response from the HTTP connection.
-     *
-     * @param connection The HTTP connection to handle the response for.
-     * @return The response string.
-     */
-    private static String handleResponse(HttpURLConnection connection) {
-        // Handle response
-        try {
-            int responseCode = connection.getResponseCode();
-
-            if(responseCode == 200) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-                while((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-                return response.toString();
-            } else {
-                return String.valueOf(responseCode);
-            }
         } catch(IOException e) {
             throw new RuntimeException(e);
         }

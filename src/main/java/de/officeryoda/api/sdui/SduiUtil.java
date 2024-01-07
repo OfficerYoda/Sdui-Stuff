@@ -5,8 +5,10 @@ import de.officeryoda.api.sdui.response.data.timetable.Lesson;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Comparator;
+import java.util.List;
 
-public class SduiApiUtil {
+public class SduiUtil {
 
     /**
      * Converts a time value in seconds to a LocalDateTime object.
@@ -49,5 +51,17 @@ public class SduiApiUtil {
     public static String formatLocalDateTimeToString(LocalDateTime dateTime) {
         // Format the time as a string using the default pattern
         return formatLocalDateTimeToString(dateTime, DateTimeFormatter.ofPattern("HH:mm"));
+    }
+
+    /**
+     * Sorts a list of lessons based on the time they begin.
+     *
+     * @param lessons The list of lessons to be sorted.
+     */
+    public static void sortLessons(List<Lesson> lessons) {
+        if (lessons == null || lessons.isEmpty()) return;
+
+        // Sort the lessons based on the time they begin (assuming BeginsAt is an int field).
+        lessons.sort(Comparator.comparingInt(Lesson::getBeginsAt));
     }
 }
