@@ -18,11 +18,6 @@ public class SduiInGoogleCalendar {
         calendarHandler = new GoogleCalendarHandler();
         sduiHandler = new SduiApiHandler();
 
-        /*
-         * TO-DO
-         * See ChatGPT chat: "Java Google Calendar"
-         */
-
         LocalDateTime startDate = LocalDateTime.of(2024, 1, 7, 0, 0);
         LocalDateTime endDate = LocalDateTime.of(2024, 1, 10, 23, 59);
 
