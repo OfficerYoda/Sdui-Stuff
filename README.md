@@ -1,4 +1,4 @@
-# SduiInGoogleCalendar
+# Sdui in Google Calendar
 
 This project replicates the [Sdui](https://sdui.de) timetable into my Google calendar.
 
